@@ -7,6 +7,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 @Path("/projetos")
 public class ProjetoResource {
 
@@ -48,6 +50,22 @@ public class ProjetoResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
+    // Mostrar todos os projetos
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/todos")
+    public Response mostrarTodosProjetos() {
+        try {
+            List<Projeto> projetos = projetoBO.mostrarTodosProjetos();
+            if (projetos.isEmpty()) {
+                return Response.status(Response.Status.NOT_FOUND).entity("Nenhum projeto encontrado.").build();
+            }
+            return Response.ok(projetos).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao recuperar os projetos: " + e.getMessage()).build();
         }
     }
 }

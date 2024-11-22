@@ -4,6 +4,7 @@ import org.example.dao.ProjetoDAO;
 import org.example.model.Projeto;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ProjetoBO {
 
@@ -46,5 +47,10 @@ public class ProjetoBO {
         }
 
         return projeto;
+    }
+
+    // Mostrar todos os projetos cadastrados
+    public List<Projeto> mostrarTodosProjetos() throws SQLException {
+        return ProjetoDAO.mostrarTodosProjetos();
     }
 }

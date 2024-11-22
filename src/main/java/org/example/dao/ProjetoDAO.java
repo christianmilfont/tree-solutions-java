@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjetoDAO {
 
@@ -45,6 +47,23 @@ public class ProjetoDAO {
             }return p;
         }
         }
-
+    public static List<Projeto> mostrarTodosProjetos() throws SQLException {
+        String sql = "SELECT * FROM Projeto";
+        List<Projeto> projetos = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Projeto p = new Projeto();
+                p.setId(rs.getInt("id"));
+                p.setNomeDoProjeto(rs.getString("NomeDoProjeto"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setCusto(rs.getInt("custo"));
+                p.setRegiao(rs.getString("regiao"));
+                p.setStatus(rs.getString("Status"));
+                projetos.add(p);
+            }
+        }
+        return projetos;
+    }
     }
 
